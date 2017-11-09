@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../services/data.service";
-import {isBoolean} from "util";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   boolError:boolean = false;
   msgError:string;
 
-  constructor(private dataService:DataService) {
+  constructor(private dataService:DataService,private userService:UserService) {
 
   }
 
@@ -28,9 +28,13 @@ export class LoginComponent implements OnInit {
       var body = JSON.parse(data['_body']);
       console.log(body);
       if(body.type) {
+        this.userService.email = body.data.email;
+        this.userService.isLoggued = true;
         this.email = body.data.email;
+
         this.token = body.data.token;
         this.dataService.token = body.data.token;
+
       } else {
         this.boolError = true;
         this.msgError = "Mauvais couple email/password";

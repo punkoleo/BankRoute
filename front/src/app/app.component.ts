@@ -8,5 +8,4 @@ export class OtherModule {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title:string = 'Banque Route';
 }

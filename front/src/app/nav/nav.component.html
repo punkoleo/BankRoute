@@ -1,4 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">BanqueRoute</a>
-  <a class="navbar-brand pull-left" href="">Retour a l'accueil</a>
+  <div *ngIf="user.isLoggued;else other_content">
+    <div class="col-md-4">
+      <a class="navbar-brand pull-left" href="">Deconexion</a>
+    </div>
+    <div class="col-md-4 align-center">
+      <pre> {{user.email}} </pre>
+    </div>
+
+  </div>
+  <ng-template #other_content>
+    <div class="col-md-12">
+      <h1>Banque Route</h1>
+    </div>
+  </ng-template>
 </nav>
