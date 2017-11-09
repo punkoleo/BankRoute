@@ -55,4 +55,12 @@ export class DataService {
         headers: new Headers({'Authorization': `Bearer ${this.token}`})
       });
   }
+
+  getTransaction() {
+    return this.http.get(
+      `${this.baseUri}/users/transactions`,
+      {
+        headers: new Headers({'Authorization': `Bearer ${this.token}`})
+      });
+  }
 }

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Transaction = require('../models/transactions');
 var jwt = require("jsonwebtoken");
 var bcrypt = require('bcrypt');
 
@@ -117,6 +118,15 @@ router.post('/virement', function(req, res) {
                                 data: "Une erreur est survenue",
                             });
                         } else {
+                            // On log la transaction :
+                            var date =  new Date();
+                            var transactionModel = new Transaction();
+                            transactionModel.emailEmetteur = req.user.email;
+                            transactionModel.emailDestinataire = user.email;
+                            transactionModel.somme = req.body.montant;
+                            transactionModel.date = date.toLocaleString();
+                            transactionModel.save();
+
                             res.json({
                                 type: true,
                                 data: montantAfterTaxe+" € envoyés à "+user.email+" (Et "+taxe+" € pour nous, oui on est une banque, on vol !)"
@@ -127,6 +137,24 @@ router.post('/virement', function(req, res) {
             }
         });
     }
+});
+
+router.get('/transactions', function(req, res) {
+    Transaction.find({
+        $or: [{emailEmetteur:req.user.email},
+            {emailDestinataire:req.user.email}]
+    },function (err,results) {
+        if(err || !results) {
+            res.json({
+                type: false
+            });
+        } else {
+            res.json({
+                type:true,
+                data:results
+            });
+        }
+    });
 });
 
 router.get('/me', function(req, res) {

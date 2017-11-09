@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../services/data.service";
+declare var System: any;
+
 
 @Component({
   selector: 'app-account',
@@ -9,10 +11,13 @@ import {DataService} from "../services/data.service";
 export class AccountComponent implements OnInit {
 
   sold:Number;
+  listTransactions = [];
   boolError:Boolean;
   msgError:String;
   boolSuccess:Boolean;
   msgSuccess:String;
+
+
   constructor(private dataService:DataService) {
   }
 
@@ -23,6 +28,14 @@ export class AccountComponent implements OnInit {
       if(body.type) {
         this.sold = body.data.sold;
       }
+    });
+
+    this.dataService.getTransaction().subscribe(data => {
+      var body = JSON.parse(data['_body']);
+      this.listTransactions = body.data;
+
+      System.import('./external.js')
+        .then(extJS=>extJS.loadDataTable(this.listTransactions));
     });
   }
 
