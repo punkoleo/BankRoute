@@ -1,0 +1,24 @@
+<div *ngIf="boolError" class="alert alert-danger">
+  {{msgError}}
+</div>
+<div *ngIf="boolSuccess" class="alert alert-success">
+  {{msgSuccess}}
+</div>
+
+<div class="col-md-3">
+  <h3>Sur votre compte :</h3>
+  <pre>{{sold}}</pre>
+</div>
+<div class="col-md-9"></div>
+
+<div class="col-md-9">
+    <form>
+      <label class="col-form-label">Montant :
+        <input type="text" #input_montant>
+      </label>
+      <label class="col-form-label">Destinataire :
+        <input type="text" #input_dest>
+      </label>
+      <button class="btn btn-success" (click)="virement(input_montant.value,input_dest.value)">Virer</button>
+    </form>
+</div>
