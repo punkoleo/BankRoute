@@ -5,7 +5,8 @@ var bcrypt = require('bcrypt')
 var UserSchema = new Schema({
         email: String,
         password: String,
-        token: String
+        token: String,
+        sold:Number
 });
  
 module.exports = mongoose.model('User', UserSchema);

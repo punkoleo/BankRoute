@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var morgan     = require("morgan");
 var users = require('./routes/users');
 var expressJwt = require('express-jwt');
+var User = require('./models/user');
 
 var app = express();
 
@@ -17,7 +18,29 @@ app.use(function(req, res, next) {
     next();
 });
 process.env['JWT_SECRET'] = 'todo_keep_secret';
-app.use(expressJwt({secret:process.env.JWT_SECRET}).unless({path:['/users/authenticate','/users/signin']}));
+
+app.use(expressJwt({
+    secret:process.env.JWT_SECRET
+}).unless({path:['/users/authenticate','/users/signin']}));
+
+app.use(function(req, res, next) {
+    bearerHeader = req.header('Authorization');
+    req.user = null;
+    if (typeof bearerHeader !== 'undefined') {
+        var bearer = bearerHeader.split(" ");
+        bearerToken = bearer[1];
+        User.findOne({token: bearerToken}, function(err, user) {
+            if (user) {
+                req.user = user;
+            }
+            next();
+        });
+    } else {
+        next();
+    }
+
+});
+
 app.use(morgan("dev"));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

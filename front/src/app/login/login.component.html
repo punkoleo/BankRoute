@@ -1,0 +1,35 @@
+<div *ngIf="token;else other_content">
+  <div class="col-md-3">
+    Vous etes connecté en tant que : <pre> {{email}} </pre>
+  </div>
+  <div class="col-md-9"></div>
+  <div class="col-md-12">
+    <app-account></app-account>
+  </div>
+
+</div>
+<ng-template #other_content>
+  <div *ngIf="boolError" class="alert alert-danger">
+    {{msgError}}
+  </div>
+  <form class="form-inline">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="col-form-label">Email :
+          <input type="text" #input_email />
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label">Password :
+          <input type="password" #input_password>
+        </label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <button class="btn btn-success" (click)="login(input_email.value,input_password.value)">Connexion</button>
+      <button class="btn btn-info" (click)="signin(input_email.value,input_password.value)">S'inscrire</button>
+    </div>
+
+  </form>
+</ng-template>
+
