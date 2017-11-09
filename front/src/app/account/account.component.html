@@ -12,13 +12,26 @@
 <div class="col-md-9"></div>
 
 <div class="col-md-9">
-    <form>
-      <label class="col-form-label">Montant :
-        <input type="text" #input_montant>
-      </label>
-      <label class="col-form-label">Destinataire :
-        <input type="text" #input_dest>
-      </label>
-      <button class="btn btn-success" (click)="virement(input_montant.value,input_dest.value)">Virer</button>
-    </form>
+  <form>
+    <label class="col-form-label">Montant :
+      <input type="text" #input_montant>
+    </label>
+    <label class="col-form-label">Destinataire :
+      <input type="text" #input_dest>
+    </label>
+    <button class="btn btn-success" (click)="virement(input_montant.value,input_dest.value)">Virer</button>
+  </form>
+</div>
+
+<div class="col-md-11">
+  <table id="table_transactions" class="table table-primary">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Emmeteur</th>
+      <th>Destinataire</th>
+      <th>Montant</th>
+    </tr>
+    </thead>
+  </table>
 </div>
