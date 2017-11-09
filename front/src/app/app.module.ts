@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 
 import {DataService} from "./services/data.service";
+import {UserService} from "./services/user.service";
 import { AccountComponent } from './account/account.component';
 
 @NgModule({
@@ -23,7 +24,7 @@ import { AccountComponent } from './account/account.component';
     FormsModule,
     HttpModule,
   ],
-  providers: [DataService],
+  providers: [DataService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
